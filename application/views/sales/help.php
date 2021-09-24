@@ -4,7 +4,7 @@
 			<th><?php echo $this->lang->line('sales_key_help'); ?></th>
 			<th><?php echo $this->lang->line('sales_key_function'); ?></th>
 		</tr>
-  </thead>
+	</thead>
 	<tbody>
 		<tr>
 			<td><code>ESC</code></td>

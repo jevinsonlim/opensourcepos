@@ -54,14 +54,14 @@ if(isset($success))
 				<?php
 				}
 				?>
-				
+
 				<li class="pull-right">
 					<button class='btn btn-default btn-sm modal-dlg' id='show_suspended_sales_button' data-href="<?php echo site_url($controller_name."/suspended"); ?>"
 							title="<?php echo $this->lang->line('sales_suspended_sales'); ?>">
 						<span class="glyphicon glyphicon-align-justify">&nbsp</span><?php echo $this->lang->line('sales_suspended_sales'); ?>
 					</button>
 				</li>
-				
+
 				<?php
 				if($this->Employee->has_grant('reports_sales', $this->session->userdata('person_id')))
 				{
@@ -73,7 +73,7 @@ if(isset($success))
 				<?php
 				}
 				?>
-				
+
 			</ul>
 		</div>
 	<?php echo form_close(); ?>
@@ -398,7 +398,7 @@ if(isset($success))
 							title="<?php echo $this->lang->line($controller_name. '_new_customer'); ?>">
 						<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_customer'); ?>
 					</button>					
-					<button class='btn btn-default btn-sm modal-dlg' id='show_keyboard_help' data-href="<?php echo site_url($controller_name."/sales_keyboard_help"); ?>"
+					<button class='btn btn-default btn-sm modal-dlg' id='show_keyboard_help' data-href="<?php echo site_url("$controller_name/sales_keyboard_help"); ?>"
 							title="<?php echo $this->lang->line('sales_key_title'); ?>">
 						<span class="glyphicon glyphicon-share-alt">&nbsp</span><?php echo $this->lang->line('sales_key_help'); ?>
 					</button>
@@ -578,7 +578,7 @@ if(isset($success))
 					<div class='btn btn-sm btn-danger pull-right' id='cancel_sale_button'><span class="glyphicon glyphicon-remove">&nbsp</span><?php echo $this->lang->line('sales_cancel_sale'); ?></div>
 				</div>
 			<?php echo form_close(); ?>
-	
+
 			<?php
 			// Only show this part if the payment cover the total
 			if($payments_cover_total || !$pos_mode)
