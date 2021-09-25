@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<ul class="nav nav-tabs" id="SCTabs" data-toggle="tab">
-		<li class="active"><a href="#system_shortcuts" data-toggle="tab" title="<?php echo $this->lang->line('config_system_conf'); ?>"><?php echo $this->lang->line('sales_key_system'); ?></a></li>
-		<li><a href="#browser_shortcuts" data-toggle="tab" title="<?php echo $this->lang->line('config_email_configuration'); ?>"><?php echo $this->lang->line('sales_key_browser'); ?></a></li>
+		<li class="active"><a href="#system_shortcuts" data-toggle="tab" title="<?php echo $this->lang->line('sales_key_system'); ?>"><?php echo $this->lang->line('sales_key_system'); ?></a></li>
+		<li><a href="#browser_shortcuts" data-toggle="tab" title="<?php echo $this->lang->line('sales_key_browser'); ?>"><?php echo $this->lang->line('sales_key_browser'); ?></a></li>
 	</ul>  
 	<div class="tab-content">
 		<div class="tab-pane active" id="system_shortcuts">
