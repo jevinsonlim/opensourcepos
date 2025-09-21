@@ -566,7 +566,7 @@ class Attribute extends Model
      * @param $definition_type
      * @return array
      */
-    public function get_definition_by_name(string $definition_name, $definition_type = false): array
+    public function get_definition_by_name(string $definition_name, $definition_type = false, $deleted = null): array
     {
         $builder = $this->db->table('attribute_definitions');
         $builder->where('definition_name', $definition_name);
@@ -574,6 +574,10 @@ class Attribute extends Model
 
         if ($definition_type) {
             $builder->where('definition_type', $definition_type);
+        }
+
+        if ($deleted !== null) {
+            $builder->where('deleted', $deleted);
         }
 
         return $builder->get()->getResultArray();

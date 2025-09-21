@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Libraries\Barcode_lib;
 use App\Libraries\Item_lib;
-
+use App\Libraries\ItemPurchaseFrequency_lib;
 use App\Models\Attribute;
 use App\Models\Inventory;
 use App\Models\Item;
@@ -29,6 +29,7 @@ class Items extends Secure_Controller
     private BaseHandler $image;
     private Barcode_lib $barcode_lib;
     private Item_lib $item_lib;
+    private ItemPurchaseFrequency_lib $item_purchase_frequency_lib;
     private Attribute $attribute;
     private Inventory $inventory;
     private Item $item;
@@ -51,6 +52,7 @@ class Items extends Secure_Controller
 
         $this->barcode_lib = new Barcode_lib();
         $this->item_lib = new Item_lib();
+        $this->item_purchase_frequency_lib = new ItemPurchaseFrequency_lib();
 
         $this->attribute = model(Attribute::class);
         $this->inventory = model(Inventory::class);
@@ -714,6 +716,8 @@ class Items extends Secure_Controller
             }
             $this->saveItemAttributes($item_id);
 
+            if($new_item) $this->item_purchase_frequency_lib->init_record($item_id);
+
             if ($success && $upload_success) {
                 $message = lang('Items.successful_' . ($new_item ? 'adding' : 'updating')) . ' ' . $item_data['name'];
 
@@ -989,7 +993,7 @@ class Items extends Secure_Controller
                             'pic_filename'  => $row['Image']
                         ];
 
-                        if (!empty($row['supplier ID'])) {
+                        if (!empty($row['Supplier ID'])) {
                             $item_data['supplier_id'] = $this->supplier->exists($row['Supplier ID']) ? $row['Supplier ID'] : null;
                         }
 

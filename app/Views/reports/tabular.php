@@ -58,7 +58,8 @@
                 iconSize: 'sm',
                 paginationVAlign: 'bottom',
                 escape: true,
-                search: true
+                search: true,
+                pageList: [10, 25, 50, 100, 250, 500]
             });
     });
 </script>

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Libraries\Barcode_lib;
 use App\Libraries\Email_lib;
+use App\Libraries\ItemPurchaseFrequency_lib;
 use App\Libraries\Sale_lib;
 use App\Libraries\Tax_lib;
 use App\Libraries\Token_lib;
@@ -29,6 +30,7 @@ class Sales extends Secure_Controller
 {
     protected $helpers = ['file'];
     private Barcode_lib $barcode_lib;
+    private ItemPurchaseFrequency_lib $item_purchase_frequency_lib;
     private Email_lib $email_lib;
     private Sale_lib $sale_lib;
     private Tax_lib $tax_lib;
@@ -49,6 +51,7 @@ class Sales extends Secure_Controller
 
         $this->session = session();
         $this->barcode_lib = new Barcode_lib();
+        $this->item_purchase_frequency_lib = new ItemPurchaseFrequency_lib();
         $this->email_lib = new Email_lib();
         $this->sale_lib = new Sale_lib();
         $this->tax_lib = new Tax_lib();
@@ -768,6 +771,11 @@ class Sales extends Secure_Controller
                     $data['barcode'] = $this->barcode_lib->generate_receipt_barcode($data['sale_id']);
                     echo view('sales/' . $invoice_view, $data);
                     $this->sale_lib->clear_all();
+
+                    // Purchase frequency update trigger...
+                    foreach ($data['cart'] as $line) {
+                        $this->item_purchase_frequency_lib->update_quantity_sold_today($line['item_id']);
+                    }
                 }
             }
         } elseif ($this->sale_lib->is_work_order_mode()) {
@@ -1311,6 +1319,14 @@ class Sales extends Secure_Controller
             $sale_ids = $sale_id == NEW_ENTRY ? $this->request->getPost('ids', FILTER_SANITIZE_NUMBER_INT) : [$sale_id];
 
             if ($this->sale->delete_list($sale_ids, $employee_id, $update_inventory)) {
+                foreach ($sale_ids as $sale_id) {
+					$items = $this->sale->get_sale_items($sale_id)->result_array();
+
+					foreach ($items as $item) {
+						$this->item_purchase_frequency_lib->update_quantity_sold_today($item['item_id']);
+					}
+				}
+                
                 echo json_encode([
                     'success' => true,
                     'message' => lang('Sales.successfully_deleted') . ' ' . count($sale_ids) . ' ' . lang('Sales.one_or_multiple'),

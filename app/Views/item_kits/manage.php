@@ -16,7 +16,8 @@
             resource: '<?= esc($controller_name) ?>',
             headers: <?= $table_headers ?>,
             pageSize: <?= $config['lines_per_page'] ?>,
-            uniqueId: 'item_kit_id'
+            uniqueId: 'item_kit_id',
+            pageList: [10, 25, 50, 100, 250, 500]
         });
 
         $('#generate_barcodes').click(function() {

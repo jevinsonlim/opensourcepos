@@ -255,7 +255,8 @@
             iconSize: 'sm',
             silentSort: true,
             paginationVAlign: 'bottom',
-            escape: true
+            escape: true,
+            pageList: [10, 15, 25, 50, 100, 250, 500]
         }));
         enable_actions();
         init_delete();

@@ -20,7 +20,8 @@
             enableActions: function() {
                 var email_disabled = $("td input:checkbox:checked").parents("tr").find("td a[href^='mailto:']").length == 0;
                 $("#email").prop('disabled', email_disabled);
-            }
+            },
+            pageList: [10, 25, 50, 100, 250, 500]
         });
 
         $("#email").click(function(event) {

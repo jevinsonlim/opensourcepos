@@ -17,7 +17,7 @@
             headers: <?= $table_headers ?>,
             pageSize: <?= $config['lines_per_page'] ?>,
             uniqueId: 'expense_category_id',
-
+            pageList: [10, 25, 50, 100, 250, 500]
         });
 
         // When any filter is clicked and the dropdown window is closed

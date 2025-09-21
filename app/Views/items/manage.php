@@ -70,7 +70,8 @@ use App\Models\Employee;
                         left: -210
                     }
                 })
-            }
+            },
+            pageList: [10, 25, 50, 100, 250, 500]
         });
     });
 </script>

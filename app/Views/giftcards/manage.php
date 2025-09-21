@@ -15,7 +15,8 @@
             resource: '<?= esc($controller_name) ?>',
             headers: <?= $table_headers ?>,
             pageSize: <?= $config['lines_per_page'] ?>,
-            uniqueId: 'giftcard_id'
+            uniqueId: 'giftcard_id',
+            pageList: [10, 25, 50, 100, 250, 500]
         });
     });
 </script>

@@ -33,6 +33,16 @@ class Inventory extends Model
      */
     public function update($comment = null, $inventory_data = null): bool
     {
+        if (
+            $inventory_data['trans_item']
+            && $inventory_data['trans_inventory']
+        ) {
+            $this->update_total_quantity(
+                $inventory_data['trans_items'],
+                $inventory_data['trans_inventory']
+            );
+        }
+
         $builder = $this->db->table('inventory');
         $builder->where('trans_comment', $comment);
 
@@ -97,4 +107,15 @@ class Inventory extends Model
 
         return $builder->get()->getResultArray();
     }
+
+    public function update_total_quantity($item_id, $new_quantity)
+	{
+		$sql = "
+			UPDATE ospos_items items 
+			SET items.total_quantity = items.total_quantity + ?
+			WHERE items.item_id = ?
+		";
+
+		$this->db->query($sql, [ $new_quantity, $item_id] );
+	}
 }

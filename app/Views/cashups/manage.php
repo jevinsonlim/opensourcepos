@@ -36,7 +36,8 @@
                     "filters": $("#filters").val(),
                     "start_date": start_date
                 });
-            }
+            },
+            pageList: [10, 25, 50, 100, 250, 500]
         });
     });
 </script>

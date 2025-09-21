@@ -8,7 +8,9 @@ use App\Models\Stock_location;
 use App\Models\Supplier;
 use App\Models\Reports\Detailed_receivings;
 use App\Models\Reports\Detailed_sales;
+use App\Models\Reports\Inventory_item_purchase_frequency;
 use App\Models\Reports\Inventory_low;
+use App\Models\Reports\Inventory_low_v2;
 use App\Models\Reports\Inventory_summary;
 use App\Models\Reports\Specific_customer;
 use App\Models\Reports\Specific_discount;
@@ -2005,31 +2007,49 @@ class Reports extends Secure_Controller
 
         $inputs = [];
 
-        $inventory_low = model(Inventory_low::class);
+        $inventory_low = model(Inventory_low_v2::class);
 
-        $report_data = $inventory_low->getData($inputs);
+		$report_data = $inventory_low->getData($inputs);
+		
+		$tabular_data = array();
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array(
+				'item_name' => $row['name'],
+				'item_number' => $row['item_number'],
+				'quantity' => to_quantity_decimals($row['quantity']),
+				'reorder_level' => to_quantity_decimals($row['reorder_level']),
+				// 'location_name' => $row['location_name']
+				'quantity_sold_today' => $row['quantity_sold_today'],
+				'average_quantity_sold_per_week' => $row['average_quantity_sold_per_week'],
+				'average_quantity_sold_per_month' => $row['average_quantity_sold_per_month']
+			);
+		}
 
-        $tabular_data = [];
-        foreach ($report_data as $row) {
-            $tabular_data[] = [
-                'item_name'     => $row['name'],
-                'item_number'   => $row['item_number'],
-                'quantity'      => to_quantity_decimals($row['quantity']),
-                'reorder_level' => to_quantity_decimals($row['reorder_level']),
-                'location_name' => $row['location_name']
-            ];
-        }
-
-        $data = [
-            'title'        => lang('Reports.inventory_low_report'),
-            'subtitle'     => '',
-            'headers'      => $inventory_low->getDataColumns(),
-            'data'         => $tabular_data,
-            'summary_data' => $inventory_low->getSummaryData($inputs)
-        ];
+		$data = array(
+			'title' => lang('Reports.inventory_low_report'),
+			'subtitle' => '',
+			'headers' => $model->getDataColumns(),
+			'data' => $tabular_data,
+			'summary_data' => $model->getSummaryData($inputs)
+		);
 
         echo view('reports/tabular', $data);
     }
+
+    public function inventory_item_purchase_frequency()
+	{
+		$inputs = array();
+
+		
+		$model = model(Inventory_item_purchase_frequency::class);
+
+		$report_data = $model->getData($inputs);
+
+		$tabular_data = array();
+
+		return $subtitle;
+	}
 
     /**
      * Gets the inventory summary input view. Used in app/Config/Routes.php

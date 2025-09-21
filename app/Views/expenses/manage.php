@@ -43,7 +43,8 @@
                     "end_date": end_date,
                     "filters": $("#filters").val()
                 });
-            }
+            },
+            pageList: [10, 25, 50, 100, 250, 500]
         });
     });
 </script>

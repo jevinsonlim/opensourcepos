@@ -13,7 +13,8 @@
             resource: '<?= esc($controller_name) ?>',
             headers: <?= $tax_rate_table_headers ?>,
             pageSize: <?= $config['lines_per_page'] ?>,
-            uniqueId: 'tax_rate_id'
+            uniqueId: 'tax_rate_id',
+            pageList: [10, 25, 50, 100, 250, 500]
         });
     });
 </script>

@@ -60,6 +60,8 @@ return [
     "inventory_reports"                       => "Inventory Reports",
     "inventory_summary"                       => "Inventory Summary",
     "inventory_summary_report"                => "Inventory Summary Report",
+    "inventory_item_purchase_frequency"                => "Item Purchase Frequency",
+    "inventory_item_purchase_frequency_report"                => "Item Purchase Frequency",
     "item"                                    => "Item",
     "item_count"                              => "Filter Item Count",
     "item_name"                               => "Item Name",
